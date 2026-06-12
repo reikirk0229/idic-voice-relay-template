@@ -6,8 +6,8 @@ const express = require('express');
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const MAX_JSON_MB = Math.max(1, Number(process.env.MAX_JSON_MB || 12));
-const REQUEST_TIMEOUT_MS = Math.max(5000, Number(process.env.REQUEST_TIMEOUT_MS || 55000));
-const ALIYUN_TIMEOUT_MS = Math.max(5000, Number(process.env.ALIYUN_TIMEOUT_MS || 50000));
+const REQUEST_TIMEOUT_MS = Math.max(5000, Number(process.env.REQUEST_TIMEOUT_MS || 190000));
+const ALIYUN_TIMEOUT_MS = Math.max(5000, Number(process.env.ALIYUN_TIMEOUT_MS || 180000));
 const TENCENT_TIMEOUT_MS = Math.max(5000, Number(process.env.TENCENT_TIMEOUT_MS || 20000));
 const RELAY_TOKEN = String(process.env.IDIC_RELAY_TOKEN || '').trim();
 

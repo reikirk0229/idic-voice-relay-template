@@ -12,8 +12,8 @@ services:
       - key: MAX_JSON_MB
         value: "12"
       - key: REQUEST_TIMEOUT_MS
-        value: "55000"
+        value: "190000"
       - key: ALIYUN_TIMEOUT_MS
-        value: "50000"
+        value: "180000"
       - key: TENCENT_TIMEOUT_MS
         value: "20000"
