@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: idic-voice-relay
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: IDIC_RELAY_TOKEN
+        generateValue: true
+      - key: MAX_JSON_MB
+        value: "12"
+      - key: REQUEST_TIMEOUT_MS
+        value: "55000"
+      - key: ALIYUN_TIMEOUT_MS
+        value: "50000"
+      - key: TENCENT_TIMEOUT_MS
+        value: "20000"
