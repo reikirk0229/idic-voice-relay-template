@@ -366,7 +366,13 @@ app.get('/health', (req, res) => {
     ok: true,
     service: 'idic-voice-relay',
     version: '0.1.0',
-    tokenRequired: Boolean(RELAY_TOKEN)
+    tokenRequired: Boolean(RELAY_TOKEN),
+    limits: {
+      maxJsonMb: MAX_JSON_MB,
+      requestTimeoutMs: REQUEST_TIMEOUT_MS,
+      aliyunTimeoutMs: ALIYUN_TIMEOUT_MS,
+      tencentTimeoutMs: TENCENT_TIMEOUT_MS
+    }
   });
 });
 
