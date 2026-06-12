@@ -311,7 +311,7 @@ async function callTencentAsr(body) {
 
 async function callAliyunUnderstanding(body) {
   const apiKey = String(body.apiKey || '').trim() || String(process.env.ALIYUN_API_KEY || '').trim();
-  const model = String(body.model || process.env.ALIYUN_MODEL || 'qwen3-omni-30b-a3b-captioner').trim();
+  const model = String(body.model || process.env.ALIYUN_MODEL || 'qwen3-omni-flash').trim();
   const baseUrl = String(body.baseUrl || process.env.ALIYUN_BASE_URL || '').trim();
   const audioData = normalizeAudioData(body.audioBase64);
   const audioFormat = String(body.audioFormat || 'wav').trim().toLowerCase() || 'wav';
