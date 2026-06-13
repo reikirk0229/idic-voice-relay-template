@@ -10,6 +10,15 @@ const REQUEST_TIMEOUT_MS = Math.max(5000, Number(process.env.REQUEST_TIMEOUT_MS 
 const ALIYUN_TIMEOUT_MS = Math.max(5000, Number(process.env.ALIYUN_TIMEOUT_MS || 180000));
 const TENCENT_TIMEOUT_MS = Math.max(5000, Number(process.env.TENCENT_TIMEOUT_MS || 20000));
 const RELAY_TOKEN = String(process.env.IDIC_RELAY_TOKEN || '').trim();
+const DEFAULT_ALIYUN_PROMPT = [
+  '你在帮聊天角色听懂用户刚发来的语音。只写角色接话用的听感速记，重点是用户本人和当下现场。',
+  '先判断 audioType：speech/singing/humming/ambient/mixed/uncertain；无论哪类，都同时听用户声音、说/唱内容和背景环境。',
+  'environment 必填：记录背景声、空间感、距离感和周围状态，如房间/户外/车内、人声、风声、键盘、水声、音乐、电流声、是否安静；听不出就写“背景很安静/不明显”。',
+  'speech：写用户说了什么、语气、情绪、停顿、语速，并结合背景音判断状态；singing：评价用户唱得怎么样，包含音准、节奏、气息、咬字、音色、表现力，同时记录伴奏和现场环境；ambient：用户没怎么说话时，写生活背景音里发生了什么。',
+  'voiceProfile 必填：评价用户声音本身，如声线高低、厚薄、明亮/沙哑/清甜/磁性、年龄感/成熟感、亲密感；不确定就写“听不太确定”。',
+  '输出中文 JSON，不要 Markdown。字段：audioType, summary, voiceProfile, speech, singing, ambient, environment, emotion, pace, pauses, prosody, delivery, accompaniment, pitchAccuracy, rhythm, breath, diction, voiceQuality, expressiveness, aiUnderstanding。',
+  '每个字段一句短句；summary 40字内，voiceProfile/speech/singing/ambient/environment/aiUnderstanding 各100字内。aiUnderstanding 写给角色接话用。'
+].join('\n');
 
 app.use(cors());
 app.use(express.json({ limit: `${MAX_JSON_MB}mb` }));
@@ -133,7 +142,7 @@ function shouldStreamModel(model) {
 }
 
 function buildAliyunPrompt(prompt, transcript, localMeta) {
-  const parts = [trimText(prompt || '', 1200)].filter(Boolean);
+  const parts = [trimText(prompt || DEFAULT_ALIYUN_PROMPT, 1200)].filter(Boolean);
   const transcriptText = trimText(transcript, 800);
   if (transcriptText) parts.push(`Transcript: ${transcriptText}`);
   if (localMeta && typeof localMeta === 'object') {
